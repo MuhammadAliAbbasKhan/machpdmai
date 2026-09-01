@@ -1,244 +1,373 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Cpu, ChevronDown, Activity, User, Menu, X, Zap, ShieldCheck } from 'lucide-react';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Cpu, Menu, X } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 export default function Header() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState(null);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user, logout, openAuth, setDemoModalOpen } = useAuth();
-  const location = useLocation();
   const navigate = useNavigate();
 
-  // Close dropdowns on route change
-  useEffect(() => {
-    setActiveDropdown(null);
-    setMobileMenuOpen(false);
-  }, [location.pathname]);
-
-  const navMenus = [
-    {
-      name: 'Products',
-      path: '/solutions',
-      dropdown: [
-        { name: 'Fleet AI Engine', path: '/solutions' },
-        { name: 'Defense & Military', path: '/products/defense' },
-        { name: 'Tire Analytics', path: '/products/tires' },
-        { name: 'Custom Fleet Software', path: '/products/custom-software' },
-      ]
-    },
-    {
-      name: 'Industries',
-      path: '/solutions',
-      dropdown: [
-        { name: 'Buses & Transit', path: '/industries/buses' },
-        { name: 'Concrete & Mixers', path: '/industries/concrete' },
-        { name: 'Construction & Off-Highway', path: '/industries/construction' },
-        { name: 'Federal & Government', path: '/federal' },
-        { name: 'Heavy Trucks & Freight', path: '/industries/heavy-trucks' },
-        { name: 'Medium Trucks & Logistics', path: '/industries/medium-trucks' },
-        { name: 'Mining & Open-Pit Excavation', path: '/industries/mining' },
-      ]
-    },
-    {
-      name: 'Features',
-      path: '/features',
-      dropdown: [
-        { name: 'Fleet Insight Dashboards', path: '/features/dashboards' },
-        { name: 'Maintenance Value Optimization', path: '/features/maintenance-optimization' },
-        { name: 'Mixed Fleet Data Hub', path: '/features/data-hub' },
-        { name: 'Remote Diagnostics', path: '/features/remote-diagnostics' },
-        { name: 'Risk Explorer', path: '/features/risk-explorer' },
-        { name: 'Sensor Insights', path: '/features/sensor-insights' },
-        { name: 'Warranty Tracking', path: '/features/warranty' },
-      ]
-    },
-    { name: 'Become a Partner', path: '/partners' },
-    {
-      name: 'Resources',
-      path: '/news',
-      dropdown: [
-        { name: 'Blog & Insights', path: '/news' },
-        { name: 'Case Studies ($42M Saved)', path: '/cases' },
-        { name: 'Technical eBooks', path: '/resources/ebooks' },
-        { name: 'Video Demos', path: '/resources/videos' },
-        { name: 'Webinars', path: '/resources/webinars' },
-        { name: 'White Papers', path: '/news' },
-      ]
-    },
-    { name: 'Contact Us', path: '/contact' }
-  ];
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
 
   return (
-    <header className="fixed top-4 left-1/2 -translate-x-1/2 z-[10000] w-[96%] max-w-7xl">
-      <div className="bg-[#0F1420]/90 backdrop-blur-xl border border-cyan-500/25 rounded-full px-5 py-3 shadow-[0_10px_35px_rgba(0,0,0,0.6)] flex items-center justify-between transition-all duration-300">
+    <header className="uptake-header" style={{
+      width: "100%",
+      backgroundColor: "#ffffff",
+      borderBottom: "1px solid #e5e7eb",
+      position: "sticky",
+      top: "0",
+      zIndex: "1000"
+    }}>
+      <div className="header-areas desktop-width" style={{
+        maxWidth: "1360px",
+        margin: "0 auto",
+        padding: "15px 20px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between"
+      }}>
         
-        {/* Brand Logo */}
-        <Link to="/" className="flex items-center gap-2 group shrink-0">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-emerald-400 p-[2px] shadow-[0_0_15px_rgba(0,242,254,0.4)] group-hover:scale-105 transition-transform">
-            <div className="w-full h-full bg-[#090D16] rounded-[10px] flex items-center justify-center">
-              <Cpu className="w-5 h-5 text-cyan-400 animate-pulse" />
+        {/* ===== LOGO ===== */}
+        <div className="logo">
+          <Link to="/" style={{ display: "flex", alignItems: "center", gap: "8px", textDecoration: "none" }}>
+            <div style={{
+              width: "36px",
+              height: "36px",
+              borderRadius: "8px",
+              background: "linear-gradient(135deg, #165ffb, #00d084)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "#ffffff"
+            }}>
+              <Cpu style={{ width: "20px", height: "20px" }} />
             </div>
-          </div>
-          <div className="flex flex-col">
-            <div className="flex items-center font-heading font-black text-xl tracking-tight text-white">
-              <span>Mach</span>
-              <span className="bg-gradient-to-r from-cyan-400 via-teal-300 to-emerald-400 bg-clip-text text-transparent ml-0.5">PdM</span>
-              <span className="text-xs ml-1.5 px-1.5 py-0.5 rounded-md bg-cyan-950/80 border border-cyan-500/40 text-cyan-300 font-semibold tracking-wider uppercase">AI</span>
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <span style={{
+                fontFamily: "'Outfit', 'Inter', sans-serif",
+                fontWeight: "900",
+                fontSize: "20px",
+                color: "#111827",
+                letterSpacing: "-0.5px"
+              }}>
+                Mach<span style={{ color: "#165ffb" }}>PdM</span><span style={{ fontSize: "12px", marginLeft: "4px", backgroundColor: "#eff6ff", color: "#165ffb", padding: "2px 6px", borderRadius: "4px", fontWeight: "700" }}>AI</span>
+              </span>
             </div>
-            <span className="text-[9px] text-slate-400 tracking-widest uppercase font-mono -mt-1">Predictive Intelligence</span>
-          </div>
-        </Link>
-
-        {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-1 bg-[#090D16]/80 border border-slate-800 rounded-full px-3 py-1">
-          {navMenus.map((menu, idx) => (
-            <div
-              key={idx}
-              className="relative group"
-              onMouseEnter={() => setActiveDropdown(idx)}
-              onMouseLeave={() => setActiveDropdown(null)}
-            >
-              <Link
-                to={menu.path}
-                className="px-3.5 py-1.5 rounded-full text-xs font-semibold text-slate-200 hover:text-white hover:bg-slate-800/60 transition-all flex items-center gap-1"
-              >
-                <span>{menu.name}</span>
-                {menu.dropdown && <ChevronDown className="w-3 h-3 text-cyan-400 group-hover:rotate-180 transition-transform" />}
-              </Link>
-
-              {/* Dropdown Menu */}
-              {menu.dropdown && activeDropdown === idx && (
-                <div className="absolute top-full left-0 mt-2 w-64 bg-[#0D111A] border border-cyan-500/30 rounded-2xl p-2 shadow-2xl backdrop-blur-2xl animate-in fade-in slide-in-from-top-2">
-                  {menu.dropdown.map((sub, sIdx) => (
-                    <Link
-                      key={sIdx}
-                      to={sub.path}
-                      className="block px-3.5 py-2 rounded-xl text-xs font-medium text-slate-300 hover:text-cyan-300 hover:bg-slate-800/80 transition-all"
-                    >
-                      {sub.name}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
-        </nav>
-
-        {/* Action Controls */}
-        <div className="hidden lg:flex items-center gap-3 shrink-0">
-          <button
-            onClick={() => setDemoModalOpen(true)}
-            className="text-xs font-semibold px-4 py-2 rounded-full border border-slate-700 text-slate-200 hover:border-cyan-500/50 hover:text-white hover:bg-slate-800/80 transition-all flex items-center gap-1.5"
-          >
-            <Activity className="w-3.5 h-3.5 text-cyan-400" />
-            <span>Request Demo</span>
-          </button>
-
-          {user ? (
-            <div className="flex items-center gap-2">
-              <Link
-                to="/paid-services"
-                className="text-xs font-medium text-emerald-400 bg-emerald-950/60 border border-emerald-500/40 px-3 py-1.5 rounded-full flex items-center gap-1 hover:bg-emerald-900/60"
-              >
-                <Zap className="w-3 h-3 fill-emerald-400" />
-                <span>Subscriber Hub</span>
-              </Link>
-              <button
-                onClick={logout}
-                className="text-xs font-medium text-slate-400 hover:text-white px-2 py-1"
-              >
-                Sign Out
-              </button>
-            </div>
-          ) : (
-            <button
-              onClick={() => openAuth('login')}
-              className="text-xs font-bold px-5 py-2 rounded-full bg-gradient-to-r from-cyan-500 via-teal-400 to-emerald-400 text-slate-950 hover:shadow-[0_0_20px_rgba(0,242,254,0.5)] hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-1.5"
-            >
-              <User className="w-3.5 h-3.5 text-slate-950" />
-              <span>Sign In</span>
-            </button>
-          )}
+          </Link>
         </div>
 
-        {/* Mobile Hamburger Button */}
-        <button
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="lg:hidden p-2 text-slate-300 hover:text-white"
-        >
-          {mobileMenuOpen ? <X className="w-6 h-6 text-cyan-400" /> : <Menu className="w-6 h-6" />}
-        </button>
-
-      </div>
-
-      {/* Mobile Menu Drawer */}
-      {mobileMenuOpen && (
-        <div className="lg:hidden mt-3 bg-[#0D111A]/95 backdrop-blur-2xl border border-cyan-500/30 rounded-2xl p-5 shadow-2xl flex flex-col gap-4 max-h-[75vh] overflow-y-auto">
-          <div className="flex flex-col gap-2">
-            {navMenus.map((menu, idx) => (
-              <div key={idx} className="flex flex-col gap-1">
-                <Link
-                  to={menu.path}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="px-4 py-2 rounded-xl text-sm font-bold text-white hover:bg-slate-800 flex items-center justify-between"
-                >
-                  <span>{menu.name}</span>
-                </Link>
-                {menu.dropdown && (
-                  <div className="pl-6 flex flex-col gap-1 border-l-2 border-slate-800">
-                    {menu.dropdown.map((sub, sIdx) => (
-                      <Link
-                        key={sIdx}
-                        to={sub.path}
-                        onClick={() => setMobileMenuOpen(false)}
-                        className="py-1.5 text-xs font-medium text-slate-400 hover:text-cyan-300"
-                      >
-                        {sub.name}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
+        {/* ===== MENU TOGGLE (Mobile) ===== */}
+        <div className="menu-toggle-area" style={{ display: "none" }}>
+          <div className="menu-toggle" onClick={toggleMenu} style={{ cursor: "pointer", fontSize: "24px", color: "#111827" }}>
+            {!isMenuOpen ? <Menu style={{ width: "28px", height: "28px" }} /> : <X style={{ width: "28px", height: "28px" }} />}
           </div>
+        </div>
 
-          <div className="pt-3 border-t border-slate-800 flex flex-col gap-2">
+        {/* ===== NAVIGATION ===== */}
+        <div className="menu-area" style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+          <nav className="main-navigation">
+            <ul className="menu" style={{
+              display: "flex",
+              listStyle: "none",
+              margin: "0",
+              padding: "0",
+              gap: "0",
+              alignItems: "center"
+            }}>
+              
+              {/* Products Dropdown */}
+              <li className="menu-item has-children" style={{ position: "relative" }}>
+                <Link to="/solutions" style={{
+                  display: "block",
+                  padding: "10px 16px",
+                  textDecoration: "none",
+                  color: "#111827",
+                  fontSize: "15px",
+                  fontWeight: "600",
+                  fontFamily: "'Inter', sans-serif"
+                }}>Products ▾</Link>
+                <ul className="sub-menu" style={{
+                  display: "none",
+                  position: "absolute",
+                  top: "100%",
+                  left: "0",
+                  backgroundColor: "#ffffff",
+                  boxShadow: "0 10px 30px rgba(0,0,0,0.12)",
+                  borderRadius: "8px",
+                  padding: "8px 0",
+                  minWidth: "200px",
+                  listStyle: "none",
+                  margin: "0",
+                  border: "1px solid #f3f4f6"
+                }}>
+                  <li><Link to="/solutions" style={subMenuItemStyle}>Fleet</Link></li>
+                  <li><Link to="/products/defense" style={subMenuItemStyle}>Defense</Link></li>
+                  <li><Link to="/products/tires" style={subMenuItemStyle}>Tires</Link></li>
+                  <li><Link to="/products/custom-software" style={subMenuItemStyle}>Custom Software</Link></li>
+                </ul>
+              </li>
+
+              {/* Industries Dropdown */}
+              <li className="menu-item has-children" style={{ position: "relative" }}>
+                <Link to="/solutions" style={{
+                  display: "block",
+                  padding: "10px 16px",
+                  textDecoration: "none",
+                  color: "#111827",
+                  fontSize: "15px",
+                  fontWeight: "600",
+                  fontFamily: "'Inter', sans-serif"
+                }}>Industries ▾</Link>
+                <ul className="sub-menu" style={{
+                  display: "none",
+                  position: "absolute",
+                  top: "100%",
+                  left: "0",
+                  backgroundColor: "#ffffff",
+                  boxShadow: "0 10px 30px rgba(0,0,0,0.12)",
+                  borderRadius: "8px",
+                  padding: "8px 0",
+                  minWidth: "200px",
+                  listStyle: "none",
+                  margin: "0",
+                  border: "1px solid #f3f4f6"
+                }}>
+                  <li><Link to="/industries/buses" style={subMenuItemStyle}>Buses</Link></li>
+                  <li><Link to="/industries/concrete" style={subMenuItemStyle}>Concrete</Link></li>
+                  <li><Link to="/industries/construction" style={subMenuItemStyle}>Construction</Link></li>
+                  <li><Link to="/federal" style={subMenuItemStyle}>Federal</Link></li>
+                  <li><Link to="/industries/heavy-trucks" style={subMenuItemStyle}>Heavy Trucks</Link></li>
+                  <li><Link to="/industries/medium-trucks" style={subMenuItemStyle}>Medium Trucks</Link></li>
+                  <li><Link to="/industries/mining" style={subMenuItemStyle}>Mining</Link></li>
+                </ul>
+              </li>
+
+              {/* Features Dropdown */}
+              <li className="menu-item has-children" style={{ position: "relative" }}>
+                <Link to="/features" style={{
+                  display: "block",
+                  padding: "10px 16px",
+                  textDecoration: "none",
+                  color: "#111827",
+                  fontSize: "15px",
+                  fontWeight: "600",
+                  fontFamily: "'Inter', sans-serif"
+                }}>Features ▾</Link>
+                <ul className="sub-menu" style={{
+                  display: "none",
+                  position: "absolute",
+                  top: "100%",
+                  left: "0",
+                  backgroundColor: "#ffffff",
+                  boxShadow: "0 10px 30px rgba(0,0,0,0.12)",
+                  borderRadius: "8px",
+                  padding: "8px 0",
+                  minWidth: "240px",
+                  listStyle: "none",
+                  margin: "0",
+                  border: "1px solid #f3f4f6"
+                }}>
+                  <li><Link to="/features/dashboards" style={subMenuItemStyle}>Fleet Insight Dashboards</Link></li>
+                  <li><Link to="/features/maintenance-optimization" style={subMenuItemStyle}>Maintenance Value Optimization</Link></li>
+                  <li><Link to="/features/data-hub" style={subMenuItemStyle}>Mixed Fleet Data Hub</Link></li>
+                  <li><Link to="/features/remote-diagnostics" style={subMenuItemStyle}>Remote Diagnostics</Link></li>
+                  <li><Link to="/features/risk-explorer" style={subMenuItemStyle}>Risk Explorer</Link></li>
+                  <li><Link to="/features/sensor-insights" style={subMenuItemStyle}>Sensor Insights</Link></li>
+                  <li><Link to="/features/warranty" style={subMenuItemStyle}>Warranty</Link></li>
+                </ul>
+              </li>
+
+              {/* Become a Partner */}
+              <li className="menu-item">
+                <Link to="/partners" style={{
+                  display: "block",
+                  padding: "10px 16px",
+                  textDecoration: "none",
+                  color: "#111827",
+                  fontSize: "15px",
+                  fontWeight: "600",
+                  fontFamily: "'Inter', sans-serif"
+                }}>Become a Partner</Link>
+              </li>
+
+              {/* Resources Dropdown */}
+              <li className="menu-item has-children" style={{ position: "relative" }}>
+                <Link to="/news" style={{
+                  display: "block",
+                  padding: "10px 16px",
+                  textDecoration: "none",
+                  color: "#111827",
+                  fontSize: "15px",
+                  fontWeight: "600",
+                  fontFamily: "'Inter', sans-serif"
+                }}>Resources ▾</Link>
+                <ul className="sub-menu" style={{
+                  display: "none",
+                  position: "absolute",
+                  top: "100%",
+                  left: "0",
+                  backgroundColor: "#ffffff",
+                  boxShadow: "0 10px 30px rgba(0,0,0,0.12)",
+                  borderRadius: "8px",
+                  padding: "8px 0",
+                  minWidth: "200px",
+                  listStyle: "none",
+                  margin: "0",
+                  border: "1px solid #f3f4f6"
+                }}>
+                  <li><Link to="/news" style={subMenuItemStyle}>Blog</Link></li>
+                  <li><Link to="/cases" style={subMenuItemStyle}>Case Studies</Link></li>
+                  <li><Link to="/resources/ebooks" style={subMenuItemStyle}>eBooks</Link></li>
+                  <li><Link to="/resources/videos" style={subMenuItemStyle}>Videos</Link></li>
+                  <li><Link to="/resources/webinars" style={subMenuItemStyle}>Webinars</Link></li>
+                  <li><Link to="/news" style={subMenuItemStyle}>White Papers</Link></li>
+                </ul>
+              </li>
+
+              {/* Contact Us */}
+              <li className="menu-item">
+                <Link to="/contact" style={{
+                  display: "block",
+                  padding: "10px 16px",
+                  textDecoration: "none",
+                  color: "#111827",
+                  fontSize: "15px",
+                  fontWeight: "600",
+                  fontFamily: "'Inter', sans-serif"
+                }}>Contact Us</Link>
+              </li>
+
+            </ul>
+          </nav>
+
+          {/* Action Buttons */}
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
             <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                setDemoModalOpen(true);
+              onClick={() => setDemoModalOpen(true)}
+              style={{
+                padding: "8px 18px",
+                borderRadius: "6px",
+                backgroundColor: "#165ffb",
+                color: "#ffffff",
+                border: "none",
+                fontWeight: "700",
+                fontSize: "14px",
+                cursor: "pointer"
               }}
-              className="w-full py-2.5 rounded-xl border border-slate-700 text-slate-200 text-sm font-semibold flex items-center justify-center gap-2"
             >
-              <Activity className="w-4 h-4 text-cyan-400" />
-              <span>Request Demo</span>
+              Request Demo
             </button>
 
             {user ? (
-              <Link
-                to="/paid-services"
-                onClick={() => setMobileMenuOpen(false)}
-                className="w-full py-2.5 rounded-xl bg-emerald-950/80 border border-emerald-500/50 text-emerald-300 text-sm font-semibold text-center"
+              <button
+                onClick={logout}
+                style={{
+                  padding: "8px 14px",
+                  borderRadius: "6px",
+                  border: "1px solid #d1d5db",
+                  backgroundColor: "#ffffff",
+                  color: "#374151",
+                  fontWeight: "600",
+                  fontSize: "14px",
+                  cursor: "pointer"
+                }}
               >
-                Subscriber Hub
-              </Link>
+                Sign Out
+              </button>
             ) : (
               <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  openAuth('login');
+                onClick={() => openAuth('login')}
+                style={{
+                  padding: "8px 16px",
+                  borderRadius: "6px",
+                  border: "1px solid #165ffb",
+                  backgroundColor: "#ffffff",
+                  color: "#165ffb",
+                  fontWeight: "700",
+                  fontSize: "14px",
+                  cursor: "pointer"
                 }}
-                className="w-full py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-emerald-400 text-slate-950 font-bold text-sm flex items-center justify-center gap-2"
               >
-                <User className="w-4 h-4" />
-                <span>Sign In / Register</span>
+                Sign In
               </button>
             )}
           </div>
         </div>
+
+      </div>
+
+      {/* ===== MOBILE MENU DRAWER ===== */}
+      {isMenuOpen && (
+        <div style={{
+          backgroundColor: "#ffffff",
+          borderTop: "1px solid #e5e7eb",
+          padding: "16px 20px",
+          maxHeight: "80vh",
+          overflowY: "auto"
+        }}>
+          <ul style={{ listStyle: "none", margin: "0", padding: "0" }}>
+            <li style={mobileItemStyle}><Link to="/solutions" onClick={toggleMenu} style={mobileLinkStyle}>Products (Fleet, Defense, Tires)</Link></li>
+            <li style={mobileItemStyle}><Link to="/solutions" onClick={toggleMenu} style={mobileLinkStyle}>Industries (Buses, Mining, Trucks)</Link></li>
+            <li style={mobileItemStyle}><Link to="/features" onClick={toggleMenu} style={mobileLinkStyle}>Features (Dashboards, Risk Explorer)</Link></li>
+            <li style={mobileItemStyle}><Link to="/partners" onClick={toggleMenu} style={mobileLinkStyle}>Become a Partner</Link></li>
+            <li style={mobileItemStyle}><Link to="/news" onClick={toggleMenu} style={mobileLinkStyle}>Resources (Blog, Case Studies)</Link></li>
+            <li style={mobileItemStyle}><Link to="/contact" onClick={toggleMenu} style={mobileLinkStyle}>Contact Us</Link></li>
+          </ul>
+        </div>
       )}
 
+      {/* CSS Styles for hover dropdowns & responsiveness */}
+      <style>{`
+        @media (max-width: 991px) {
+          .menu-toggle-area {
+            display: block !important;
+          }
+          .menu-area {
+            display: none !important;
+          }
+        }
+
+        @media (min-width: 992px) {
+          .menu-toggle-area {
+            display: none !important;
+          }
+          .menu-area {
+            display: flex !important;
+          }
+        }
+
+        .menu-item:hover > .sub-menu {
+          display: block !important;
+        }
+
+        .menu-item > a:hover {
+          color: #165ffb !important;
+        }
+      `}</style>
     </header>
   );
 }
+
+const subMenuItemStyle = {
+  display: "block",
+  padding: "8px 20px",
+  textDecoration: "none",
+  color: "#374151",
+  fontSize: "14px",
+  fontFamily: "'Inter', sans-serif"
+};
+
+const mobileItemStyle = {
+  padding: "10px 0",
+  borderBottom: "1px solid #f3f4f6"
+};
+
+const mobileLinkStyle = {
+  textDecoration: "none",
+  color: "#111827",
+  fontSize: "15px",
+  fontWeight: "600"
+};
