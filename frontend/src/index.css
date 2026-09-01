@@ -1,0 +1,139 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-dark: #07090E;
+  --bg-card: #0F1420;
+  --bg-card-hover: #151C2C;
+  --cyan-primary: #00F2FE;
+  --cyan-glow: rgba(0, 242, 254, 0.25);
+  --emerald-accent: #10B981;
+  --amber-warning: #F59E0B;
+  --rose-danger: #EF4444;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #07090E;
+  color: #F1F5F9;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6, .font-heading {
+  font-family: 'Outfit', sans-serif;
+}
+
+/* Glassmorphism Card Style */
+.glass-card {
+  background: rgba(15, 20, 32, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.glass-card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.glass-card-hover:hover {
+  transform: translateY(-4px);
+  border-color: rgba(0, 242, 254, 0.4);
+  box-shadow: 0 12px 40px 0 rgba(0, 242, 254, 0.15);
+}
+
+/* Bounded Modal Rules */
+.bounded-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(3, 7, 18, 0.82);
+  backdrop-filter: blur(8px);
+  z-index: 20000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.bounded-modal-container {
+  max-height: 90vh;
+  overflow-y: auto;
+  width: 92vw;
+  max-width: 680px;
+  margin: auto;
+  position: relative;
+  border-radius: 20px;
+  background: #0D111A;
+  border: 1px solid rgba(0, 242, 254, 0.25);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 30px rgba(0, 242, 254, 0.15);
+  padding: 32px;
+}
+
+/* Styled Top-Right Modal Close Cross Button (✕) */
+.modal-close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  border-radius: 9999px;
+  background: #1E293B;
+  color: #94A3B8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  z-index: 10;
+}
+.modal-close-btn:hover {
+  background-color: #DA2B1F !important;
+  color: #FFFFFF !important;
+  border-color: #DA2B1F !important;
+  transform: rotate(90deg);
+}
+
+/* Custom Scrollbar for Modal and Page */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0A0E17;
+}
+::-webkit-scrollbar-thumb {
+  background: #1E293B;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #00F2FE;
+}
+
+/* Pulse Keyframes */
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+.animate-pulse-glow {
+  animation: pulseGlow 4s infinite ease-in-out;
+}
+
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(1000%); }
+}
+.animate-scanline {
+  animation: scanline 8s linear infinite;
+}
