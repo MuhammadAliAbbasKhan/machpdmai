@@ -34,6 +34,10 @@ import EbooksPage from './pages/EbooksPage';
 import VideosPage from './pages/VideosPage';
 import WebinarsPage from './pages/WebinarsPage';
 
+import ProductsPage from './pages/ProductsPage';
+import IndustriesPage from './pages/IndustriesPage';
+import ResourcesPage from './pages/ResourcesPage';
+
 import DefensePage from './pages/DefensePage';
 import TiresPage from './pages/TiresPage';
 import CustomSoftwarePage from './pages/CustomSoftwarePage';
@@ -60,11 +64,8 @@ export default function App() {
       <AuthProvider>
         <Router>
           <div className="min-h-screen flex flex-col bg-[#07090E] text-slate-100 selection:bg-cyan-500 selection:text-slate-950 relative">
-            {/* Floating Fixed Header */}
+            {/* Header */}
             <Header />
-
-            {/* CRITICAL MANDATORY RULE: Fixed Header Spacer (85px) to guarantee 0% content overlap */}
-            <div style={{ height: '85px' }} />
 
             {/* Main Content Viewports */}
             <main className="flex-grow">
@@ -95,6 +96,11 @@ export default function App() {
                 <Route path="/resources/videos" element={<VideosPage />} />
                 <Route path="/resources/webinars" element={<WebinarsPage />} />
 
+                {/* Header Landing Routes */}
+                <Route path="/products" element={<ProductsPage />} />
+                <Route path="/industries" element={<IndustriesPage />} />
+                <Route path="/resources" element={<ResourcesPage />} />
+
                 {/* Header Dropdown Subpages */}
                 <Route path="/products/defense" element={<DefensePage />} />
                 <Route path="/products/tires" element={<TiresPage />} />
@@ -124,7 +130,7 @@ export default function App() {
             <DemoModal />
             <QuizModal />
 
-            {/* Exact Replica Footer */}
+            {/* Footer */}
             <Footer />
           </div>
         </Router>

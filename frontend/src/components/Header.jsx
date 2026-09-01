@@ -80,7 +80,7 @@ export default function Header() {
               
               {/* Products Dropdown */}
               <li className="menu-item has-children" style={{ position: "relative" }}>
-                <Link to="/solutions" style={{
+                <Link to="/products" style={{
                   display: "block",
                   padding: "10px 16px",
                   textDecoration: "none",
@@ -112,7 +112,7 @@ export default function Header() {
 
               {/* Industries Dropdown */}
               <li className="menu-item has-children" style={{ position: "relative" }}>
-                <Link to="/solutions" style={{
+                <Link to="/industries" style={{
                   display: "block",
                   padding: "10px 16px",
                   textDecoration: "none",
@@ -195,7 +195,7 @@ export default function Header() {
 
               {/* Resources Dropdown */}
               <li className="menu-item has-children" style={{ position: "relative" }}>
-                <Link to="/news" style={{
+                <Link to="/resources" style={{
                   display: "block",
                   padding: "10px 16px",
                   textDecoration: "none",
@@ -309,11 +309,11 @@ export default function Header() {
           overflowY: "auto"
         }}>
           <ul style={{ listStyle: "none", margin: "0", padding: "0" }}>
-            <li style={mobileItemStyle}><Link to="/solutions" onClick={toggleMenu} style={mobileLinkStyle}>Products (Fleet, Defense, Tires)</Link></li>
-            <li style={mobileItemStyle}><Link to="/solutions" onClick={toggleMenu} style={mobileLinkStyle}>Industries (Buses, Mining, Trucks)</Link></li>
+            <li style={mobileItemStyle}><Link to="/products" onClick={toggleMenu} style={mobileLinkStyle}>Products (Fleet, Defense, Tires)</Link></li>
+            <li style={mobileItemStyle}><Link to="/industries" onClick={toggleMenu} style={mobileLinkStyle}>Industries (Buses, Mining, Trucks)</Link></li>
             <li style={mobileItemStyle}><Link to="/features" onClick={toggleMenu} style={mobileLinkStyle}>Features (Dashboards, Risk Explorer)</Link></li>
             <li style={mobileItemStyle}><Link to="/partners" onClick={toggleMenu} style={mobileLinkStyle}>Become a Partner</Link></li>
-            <li style={mobileItemStyle}><Link to="/news" onClick={toggleMenu} style={mobileLinkStyle}>Resources (Blog, Case Studies)</Link></li>
+            <li style={mobileItemStyle}><Link to="/resources" onClick={toggleMenu} style={mobileLinkStyle}>Resources (Blog, Case Studies)</Link></li>
             <li style={mobileItemStyle}><Link to="/contact" onClick={toggleMenu} style={mobileLinkStyle}>Contact Us</Link></li>
           </ul>
         </div>
