@@ -1,18 +1,27 @@
 import React from 'react';
-import { HardHat, ShieldCheck } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
 
 export default function ConstructionPage() {
-  const { setDemoModalOpen } = useAuth();
   return (
-    <div className="max-w-7xl mx-auto px-6 pt-8 pb-20 flex flex-col gap-12">
-      <div className="text-center max-w-3xl mx-auto">
-        <span className="text-xs font-mono uppercase tracking-widest text-cyan-400 font-bold">Construction & Off-Highway</span>
-        <h1 className="text-4xl sm:text-5xl font-black font-heading text-white mt-2 mb-4">Construction Equipment Telemetry</h1>
-        <p className="text-sm text-slate-300">Continuous health monitoring for dozers, excavators, loaders, and cranes.</p>
-      </div>
-      <div className="bg-[#0F1420] border border-slate-800 rounded-3xl p-8 text-center flex flex-col items-center">
-        <button onClick={() => setDemoModalOpen(true)} className="px-8 py-3 rounded-full bg-cyan-500 text-slate-950 font-bold text-xs">Request Construction Demo</button>
+    <div className="construction-page" style={{ 
+      fontFamily: "'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+      backgroundColor: "#ffffff",
+      color: "#000000"
+    }}>
+      <div style={{ backgroundColor: "#111827", color: "#ffffff", padding: "80px 20px", textAlign: "center" }}>
+        <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+          <span style={{ color: "#165ffb", fontWeight: "600", textTransform: "uppercase", letterSpacing: "2px", fontSize: "14px" }}>
+            Construction & Off-Highway Equipment
+          </span>
+          <h1 style={{ fontSize: "44px", fontWeight: "700", marginTop: "10px", marginBottom: "20px" }}>
+            Uptake for Heavy Construction Fleet
+          </h1>
+          <p style={{ fontSize: "18px", color: "#9ca3af", maxWidth: "800px", margin: "0 auto 30px" }}>
+            Real-time health insights for dozers, excavators, loaders, and mobile cranes.
+          </p>
+          <a href="https://calendly.com/d/cndn-pt9-ks6/uptake-fleet-demo" target="_blank" rel="noreferrer" style={{
+            display: "inline-block", backgroundColor: "#165ffb", color: "#ffffff", padding: "14px 32px", borderRadius: "50px", fontWeight: "600", textDecoration: "none"
+          }}>Book Construction Demo</a>
+        </div>
       </div>
     </div>
   );

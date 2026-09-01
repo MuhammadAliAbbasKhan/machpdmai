@@ -2,9 +2,11 @@ import React from 'react';
 
 export default function MaintenanceOptimizationPage() {
   return (
-    <div className="max-w-7xl mx-auto px-6 pt-8 pb-20 flex flex-col gap-8">
-      <h1 className="text-4xl font-bold font-heading text-white">Maintenance Value Optimization</h1>
-      <p className="text-sm text-slate-300">Prioritize maintenance tasks based on failure severity, part availability, and operational schedule.</p>
+    <div style={{ fontFamily: "'Inter', sans-serif", backgroundColor: "#ffffff", padding: "60px 20px" }}>
+      <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
+        <h1 style={{ fontSize: "36px", fontWeight: "700", marginBottom: "16px" }}>Maintenance Value Optimization</h1>
+        <p style={{ fontSize: "18px", color: "#4b5563", lineHeight: "1.8" }}>Prioritize high-ROI repairs and prevent premature component replacements using data science survival models.</p>
+      </div>
     </div>
   );
 }

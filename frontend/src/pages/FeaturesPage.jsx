@@ -1,35 +1,47 @@
 import React from 'react';
-import { Cpu, Activity, ShieldCheck, Database, Sliders, Zap } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
+import { Link } from 'react-router-dom';
 
 export default function FeaturesPage() {
-  const { setDemoModalOpen } = useAuth();
-
-  const features = [
-    { title: 'Fleet Insight Dashboards', path: '/features/dashboards', desc: 'Real-time asset health scores, remaining useful life (RUL) estimates, and fleet risk heatmaps.' },
-    { title: 'Maintenance Value Optimization', path: '/features/maintenance-optimization', desc: 'Prioritize high-ROI repairs and prevent unnecessary parts replacement.' },
-    { title: 'Mixed Fleet Data Hub', path: '/features/data-hub', desc: 'Unified SCADA, CAN-bus, and telematics ingestion across multi-OEM fleets.' },
-    { title: 'Remote Diagnostics', path: '/features/remote-diagnostics', desc: 'Sub-second remote fault code decoding and acoustic spectral analysis.' },
-    { title: 'Risk Explorer', path: '/features/risk-explorer', desc: 'Simulate component failure probabilities over 30, 60, and 90-day windows.' },
-    { title: 'Sensor Insights', path: '/features/sensor-insights', desc: '10kHz piezo-vibration FFT and infrared thermal stream profiling.' },
-    { title: 'Warranty Tracking', path: '/features/warranty', desc: 'Automated OEM warranty claim generation based on sensor telemetry.' }
+  const featureList = [
+    { title: 'Fleet Insight Dashboards', path: '/features/dashboards', desc: 'At-a-glance fleet health scores, remaining useful life estimates, and high-risk truck prioritization.' },
+    { title: 'Maintenance Value Optimization', path: '/features/maintenance-optimization', desc: 'Prioritize repairs that yield the highest uptime ROI and prevent unnecessary part swaps.' },
+    { title: 'Mixed Fleet Data Hub', path: '/features/data-hub', desc: 'Single platform connecting telematics across Caterpillar, Cummins, Geotab, Trimble, and Samsara.' },
+    { title: 'Remote Diagnostics', path: '/features/remote-diagnostics', desc: 'Identify fault codes and sensor anomalies remotely without physically pulling the truck into the shop.' },
+    { title: 'Risk Explorer', path: '/features/risk-explorer', desc: 'Simulate component failure probabilities over 30, 60, and 90-day maintenance horizons.' },
+    { title: 'Sensor Insights', path: '/features/sensor-insights', desc: 'Deep data science models tracking alternators, batteries, cooling systems, and fluid breakdown.' },
+    { title: 'Warranty Claim Intelligence', path: '/features/warranty', desc: 'Automate eligible OEM warranty claims backed by immutable sensor proof.' }
   ];
 
   return (
-    <div className="max-w-7xl mx-auto px-6 pt-8 pb-20 flex flex-col gap-12">
-      <div className="text-center max-w-3xl mx-auto">
-        <span className="text-xs font-mono uppercase tracking-widest text-cyan-400 font-bold">MachPdMAI Capabilities</span>
-        <h1 className="text-4xl sm:text-5xl font-black font-heading text-white mt-2 mb-4">Enterprise AI Maintenance Features</h1>
-        <p className="text-sm text-slate-300">Explore the advanced physics-informed AI modules that keep your industrial fleet running.</p>
+    <div className="features-page" style={{ 
+      fontFamily: "'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+      backgroundColor: "#ffffff",
+      color: "#000000"
+    }}>
+      <div style={{ backgroundColor: "#111827", color: "#ffffff", padding: "80px 20px", textAlign: "center" }}>
+        <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+          <span style={{ color: "#165ffb", fontWeight: "600", textTransform: "uppercase", letterSpacing: "2px", fontSize: "14px" }}>
+            Platform Modules
+          </span>
+          <h1 style={{ fontSize: "44px", fontWeight: "700", marginTop: "10px", marginBottom: "20px" }}>
+            Uptake Predictive Features
+          </h1>
+          <p style={{ fontSize: "18px", color: "#9ca3af", maxWidth: "800px", margin: "0 auto 30px" }}>
+            Everything you need to turn raw sensor data into actionable maintenance work orders.
+          </p>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {features.map((f, idx) => (
-          <div key={idx} className="bg-[#0F1420] border border-slate-800 rounded-3xl p-8 hover:border-cyan-500/40 transition-all">
-            <h3 className="text-xl font-bold font-heading text-white mb-2">{f.title}</h3>
-            <p className="text-xs text-slate-400 leading-relaxed mb-4">{f.desc}</p>
-          </div>
-        ))}
+      <div style={{ maxWidth: "1200px", margin: "60px auto", padding: "0 20px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "30px" }}>
+          {featureList.map((f, idx) => (
+            <div key={idx} style={{ padding: "30px", border: "1px solid #e5e7eb", borderRadius: "16px", backgroundColor: "#ffffff" }}>
+              <h3 style={{ fontSize: "22px", fontWeight: "700", marginBottom: "12px" }}>{f.title}</h3>
+              <p style={{ color: "#4b5563", lineHeight: "1.7", marginBottom: "20px" }}>{f.desc}</p>
+              <Link to={f.path} style={{ color: "#165ffb", fontWeight: "600", textDecoration: "none" }}>Learn Feature Details →</Link>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
