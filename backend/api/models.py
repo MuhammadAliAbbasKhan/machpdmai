@@ -54,6 +54,19 @@ class ContactInquiry(models.Model):
     def __str__(self):
         return f"Inquiry from {self.name} ({self.email})"
 
+class PremiumServiceRequest(models.Model):
+    user_email = models.EmailField()
+    plan_name = models.CharField(max_length=100, default='Professional Predictive AI')
+    service_type = models.CharField(max_length=150)
+    asset_type = models.CharField(max_length=150, blank=True, default='')
+    urgency = models.CharField(max_length=50, default='Normal')
+    details = models.TextField()
+    status = models.CharField(max_length=50, default='Pending Engineer Review')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Premium Request ({self.service_type}) by {self.user_email}"
+
 class NewsletterSubscriber(models.Model):
     email = models.EmailField(unique=True)
     created_at = models.DateTimeField(auto_now_add=True)

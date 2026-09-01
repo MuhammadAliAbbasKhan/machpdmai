@@ -4,7 +4,7 @@ from rest_framework import status
 from django.utils import timezone
 import datetime
 import time
-from .models import UserAccount, SubscriptionOrder, QuizSubmission, ContactInquiry, NewsletterSubscriber
+from .models import UserAccount, SubscriptionOrder, QuizSubmission, ContactInquiry, PremiumServiceRequest, NewsletterSubscriber
 from .db_mongo import sync_to_mongo
 
 ADMIN_PASSCODE = 'aliabbas1234578!'
@@ -48,7 +48,14 @@ def register_user(request):
     return Response({
         'success': True,
         'message': 'Account registered successfully!',
-        'user': {'id': user.id, 'username': user.username, 'email': user.email, 'company': user.company, 'is_paid': False}
+        'user': {
+            'id': user.id,
+            'username': user.username,
+            'email': user.email,
+            'company': user.company,
+            'is_paid': False,
+            'active_plan': 'Free Tier'
+        }
     }, status=status.HTTP_201_CREATED)
 
 @api_view(['POST'])
@@ -64,6 +71,8 @@ def login_user(request):
     if not user or user.password != password:
         return Response({'success': False, 'message': 'Invalid email or password.'}, status=status.HTTP_401_UNAUTHORIZED)
 
+    is_active = user.is_subscription_active()
+
     return Response({
         'success': True,
         'message': 'Signed in successfully!',
@@ -72,8 +81,9 @@ def login_user(request):
             'username': user.username,
             'email': user.email,
             'company': user.company,
-            'is_paid': user.is_subscription_active(),
-            'active_plan': user.active_plan
+            'is_paid': is_active,
+            'active_plan': user.active_plan,
+            'paid_until': user.paid_until.isoformat() if user.paid_until else None
         }
     })
 
@@ -85,6 +95,24 @@ def subscribe_plan(request):
     email = data.get('email', '').strip().lower()
     cardholder_name = data.get('cardholder_name', 'Subscriber')
 
+    # Check if user already has an active subscription for the current month
+    user = UserAccount.objects.filter(email=email).first()
+    if user and user.is_subscription_active():
+        return Response({
+            'success': True,
+            'already_subscribed': True,
+            'message': f'You already have an active subscription for {user.active_plan} valid until {user.paid_until.strftime("%B %d, %Y")}.',
+            'user': {
+                'id': user.id,
+                'username': user.username,
+                'email': user.email,
+                'company': user.company,
+                'is_paid': True,
+                'active_plan': user.active_plan,
+                'paid_until': user.paid_until.isoformat()
+            }
+        })
+
     order = SubscriptionOrder.objects.create(
         plan_name=plan_name,
         amount=amount,
@@ -93,11 +121,12 @@ def subscribe_plan(request):
         stripe_payment_id=f"sub_pdm_{int(time.time())}"
     )
 
-    user = UserAccount.objects.filter(email=email).first()
+    paid_until_date = timezone.now() + datetime.timedelta(days=30)
+
     if user:
         user.is_paid = True
         user.active_plan = plan_name
-        user.paid_until = timezone.now() + datetime.timedelta(days=30)
+        user.paid_until = paid_until_date
         user.save()
 
     sync_to_mongo('subscriptions', {
@@ -114,7 +143,56 @@ def subscribe_plan(request):
         'message': f'Subscription activated successfully for {plan_name}!',
         'order_id': order.id,
         'plan_name': plan_name,
-        'amount': amount
+        'amount': amount,
+        'paid_until': paid_until_date.isoformat(),
+        'user': {
+            'id': user.id if user else 0,
+            'username': user.username if user else email,
+            'email': email,
+            'company': user.company if user else '',
+            'is_paid': True,
+            'active_plan': plan_name,
+            'paid_until': paid_until_date.isoformat()
+        }
+    })
+
+@api_view(['POST'])
+def submit_premium_request(request):
+    data = request.data
+    user_email = data.get('user_email', '').strip().lower()
+    plan_name = data.get('plan_name', 'Professional Predictive AI')
+    service_type = data.get('service_type', '').strip()
+    asset_type = data.get('asset_type', '').strip()
+    urgency = data.get('urgency', 'Normal')
+    details = data.get('details', '').strip()
+
+    if not user_email or not service_type or not details:
+        return Response({'success': False, 'message': 'Email, service type, and details are required.'}, status=status.HTTP_400_BAD_REQUEST)
+
+    req_obj = PremiumServiceRequest.objects.create(
+        user_email=user_email,
+        plan_name=plan_name,
+        service_type=service_type,
+        asset_type=asset_type,
+        urgency=urgency,
+        details=details,
+        status='Pending Engineer Review'
+    )
+
+    sync_to_mongo('premium_requests', {
+        'id': req_obj.id,
+        'email': user_email,
+        'service_type': service_type,
+        'asset_type': asset_type,
+        'urgency': urgency,
+        'created_at': time.time()
+    })
+
+    return Response({
+        'success': True,
+        'message': 'Your premium service request has been submitted successfully to our senior industrial AI engineers!',
+        'request_id': req_obj.id,
+        'status': 'Pending Engineer Review'
     })
 
 @api_view(['POST'])
@@ -205,6 +283,7 @@ def admin_analytics(request):
     subscriptions_list = list(SubscriptionOrder.objects.values('id', 'plan_name', 'amount', 'email', 'cardholder_name', 'created_at'))
     quizzes_list = list(QuizSubmission.objects.values('id', 'email', 'fleet_size', 'primary_asset_type', 'recommended_package', 'estimated_savings', 'created_at'))
     inquiries_list = list(ContactInquiry.objects.values('id', 'name', 'email', 'subject', 'message', 'created_at'))
+    premium_requests_list = list(PremiumServiceRequest.objects.values('id', 'user_email', 'plan_name', 'service_type', 'asset_type', 'urgency', 'details', 'status', 'created_at'))
 
     return Response({
         'success': True,
@@ -214,9 +293,11 @@ def admin_analytics(request):
             'total_quizzes': QuizSubmission.objects.count(),
             'total_inquiries': ContactInquiry.objects.count(),
             'total_newsletters': NewsletterSubscriber.objects.count(),
+            'total_premium_requests': PremiumServiceRequest.objects.count(),
             'users': users_list,
             'subscriptions': subscriptions_list,
             'quizzes': quizzes_list,
-            'inquiries': inquiries_list
+            'inquiries': inquiries_list,
+            'premium_requests': premium_requests_list
         }
     })
