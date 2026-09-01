@@ -24,6 +24,16 @@ import PrivacyPage from './pages/PrivacyPage';
 import TermsPage from './pages/TermsPage';
 import CookiePolicyPage from './pages/CookiePolicyPage';
 
+import AboutPage from './pages/AboutPage';
+import EventsPage from './pages/EventsPage';
+import PartnersPage from './pages/PartnersPage';
+import SecurityPage from './pages/SecurityPage';
+import CareersPage from './pages/CareersPage';
+import FederalPage from './pages/FederalPage';
+import EbooksPage from './pages/EbooksPage';
+import VideosPage from './pages/VideosPage';
+import WebinarsPage from './pages/WebinarsPage';
+
 export default function App() {
   return (
     <ToastProvider>
@@ -53,6 +63,17 @@ export default function App() {
                 <Route path="/privacy" element={<PrivacyPage />} />
                 <Route path="/terms" element={<TermsPage />} />
                 <Route path="/cookies" element={<CookiePolicyPage />} />
+
+                {/* Replica Footer Subpages */}
+                <Route path="/about" element={<AboutPage />} />
+                <Route path="/events" element={<EventsPage />} />
+                <Route path="/partners" element={<PartnersPage />} />
+                <Route path="/security" element={<SecurityPage />} />
+                <Route path="/careers" element={<CareersPage />} />
+                <Route path="/federal" element={<FederalPage />} />
+                <Route path="/resources/ebooks" element={<EbooksPage />} />
+                <Route path="/resources/videos" element={<VideosPage />} />
+                <Route path="/resources/webinars" element={<WebinarsPage />} />
               </Routes>
             </main>
 
@@ -62,7 +83,7 @@ export default function App() {
             <DemoModal />
             <QuizModal />
 
-            {/* Footer */}
+            {/* Exact Replica Footer */}
             <Footer />
           </div>
         </Router>
