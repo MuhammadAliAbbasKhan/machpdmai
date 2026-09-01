@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Cpu, Menu, X } from 'lucide-react';
+import { Cpu, Menu, X, Zap, Lock } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { user, logout, openAuth, setDemoModalOpen } = useAuth();
+  const { user, subscription, logout, openAuth, openCheckout } = useAuth();
   const navigate = useNavigate();
+
+  const isPaidSubscriber = user && (user.is_paid || subscription.is_active);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -104,9 +106,9 @@ export default function Header() {
                   border: "1px solid #f3f4f6"
                 }}>
                   <li><Link to="/solutions" style={subMenuItemStyle}>Fleet</Link></li>
-                  <li><Link to="/products/defense" style={subMenuItemStyle}>Defense</Link></li>
-                  <li><Link to="/products/tires" style={subMenuItemStyle}>Tires</Link></li>
-                  <li><Link to="/products/custom-software" style={subMenuItemStyle}>Custom Software</Link></li>
+                  <li><Link to="/products/defense" style={subMenuItemStyle}>Defense 🔒</Link></li>
+                  <li><Link to="/products/tires" style={subMenuItemStyle}>Tires 🔒</Link></li>
+                  <li><Link to="/products/custom-software" style={subMenuItemStyle}>Custom Software 🔒</Link></li>
                 </ul>
               </li>
 
@@ -170,14 +172,27 @@ export default function Header() {
                   margin: "0",
                   border: "1px solid #f3f4f6"
                 }}>
-                  <li><Link to="/features/dashboards" style={subMenuItemStyle}>Fleet Insight Dashboards</Link></li>
-                  <li><Link to="/features/maintenance-optimization" style={subMenuItemStyle}>Maintenance Value Optimization</Link></li>
-                  <li><Link to="/features/data-hub" style={subMenuItemStyle}>Mixed Fleet Data Hub</Link></li>
-                  <li><Link to="/features/remote-diagnostics" style={subMenuItemStyle}>Remote Diagnostics</Link></li>
-                  <li><Link to="/features/risk-explorer" style={subMenuItemStyle}>Risk Explorer</Link></li>
-                  <li><Link to="/features/sensor-insights" style={subMenuItemStyle}>Sensor Insights</Link></li>
-                  <li><Link to="/features/warranty" style={subMenuItemStyle}>Warranty</Link></li>
+                  <li><Link to="/features/dashboards" style={subMenuItemStyle}>Fleet Insight Dashboards 🔒</Link></li>
+                  <li><Link to="/features/maintenance-optimization" style={subMenuItemStyle}>Maintenance Value Optimization 🔒</Link></li>
+                  <li><Link to="/features/data-hub" style={subMenuItemStyle}>Mixed Fleet Data Hub 🔒</Link></li>
+                  <li><Link to="/features/remote-diagnostics" style={subMenuItemStyle}>Remote Diagnostics 🔒</Link></li>
+                  <li><Link to="/features/risk-explorer" style={subMenuItemStyle}>Risk Explorer 🔒</Link></li>
+                  <li><Link to="/features/sensor-insights" style={subMenuItemStyle}>Sensor Insights 🔒</Link></li>
+                  <li><Link to="/features/warranty" style={subMenuItemStyle}>Warranty 🔒</Link></li>
                 </ul>
+              </li>
+
+              {/* Pricing */}
+              <li className="menu-item">
+                <Link to="/pricing" style={{
+                  display: "block",
+                  padding: "10px 16px",
+                  textDecoration: "none",
+                  color: "#165ffb",
+                  fontSize: "15px",
+                  fontWeight: "700",
+                  fontFamily: "'Inter', sans-serif"
+                }}>Pricing Plans</Link>
               </li>
 
               {/* Become a Partner */}
@@ -245,21 +260,46 @@ export default function Header() {
 
           {/* Action Buttons */}
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <button
-              onClick={() => setDemoModalOpen(true)}
-              style={{
-                padding: "8px 18px",
-                borderRadius: "6px",
-                backgroundColor: "#165ffb",
-                color: "#ffffff",
-                border: "none",
-                fontWeight: "700",
-                fontSize: "14px",
-                cursor: "pointer"
-              }}
-            >
-              Request Demo
-            </button>
+            {isPaidSubscriber ? (
+              <Link
+                to="/paid-services"
+                style={{
+                  padding: "8px 18px",
+                  borderRadius: "6px",
+                  backgroundColor: "#10b981",
+                  color: "#ffffff",
+                  textDecoration: "none",
+                  fontWeight: "700",
+                  fontSize: "14px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "6px"
+                }}
+              >
+                <Zap style={{ width: "16px", height: "16px", fill: "#ffffff" }} />
+                <span>Subscriber Hub</span>
+              </Link>
+            ) : (
+              <button
+                onClick={() => openCheckout('Professional Predictive AI', 150)}
+                style={{
+                  padding: "8px 18px",
+                  borderRadius: "6px",
+                  backgroundColor: "#165ffb",
+                  color: "#ffffff",
+                  border: "none",
+                  fontWeight: "700",
+                  fontSize: "14px",
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "6px"
+                }}
+              >
+                <Lock style={{ width: "14px", height: "14px" }} />
+                <span>Subscribe via Stripe</span>
+              </button>
+            )}
 
             {user ? (
               <button
@@ -309,9 +349,10 @@ export default function Header() {
           overflowY: "auto"
         }}>
           <ul style={{ listStyle: "none", margin: "0", padding: "0" }}>
-            <li style={mobileItemStyle}><Link to="/products" onClick={toggleMenu} style={mobileLinkStyle}>Products (Fleet, Defense, Tires)</Link></li>
+            <li style={mobileItemStyle}><Link to="/products" onClick={toggleMenu} style={mobileLinkStyle}>Products (Fleet, Defense 🔒, Tires 🔒)</Link></li>
             <li style={mobileItemStyle}><Link to="/industries" onClick={toggleMenu} style={mobileLinkStyle}>Industries (Buses, Mining, Trucks)</Link></li>
-            <li style={mobileItemStyle}><Link to="/features" onClick={toggleMenu} style={mobileLinkStyle}>Features (Dashboards, Risk Explorer)</Link></li>
+            <li style={mobileItemStyle}><Link to="/features" onClick={toggleMenu} style={mobileLinkStyle}>Features (Dashboards 🔒, Risk Explorer 🔒)</Link></li>
+            <li style={mobileItemStyle}><Link to="/pricing" onClick={toggleMenu} style={{ ...mobileLinkStyle, color: "#165ffb" }}>Pricing Plans</Link></li>
             <li style={mobileItemStyle}><Link to="/partners" onClick={toggleMenu} style={mobileLinkStyle}>Become a Partner</Link></li>
             <li style={mobileItemStyle}><Link to="/resources" onClick={toggleMenu} style={mobileLinkStyle}>Resources (Blog, Case Studies)</Link></li>
             <li style={mobileItemStyle}><Link to="/contact" onClick={toggleMenu} style={mobileLinkStyle}>Contact Us</Link></li>

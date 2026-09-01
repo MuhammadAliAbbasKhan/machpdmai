@@ -4,6 +4,7 @@ import { ToastProvider } from './context/ToastContext';
 import { AuthProvider } from './context/AuthContext';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import ProtectedRoute from './components/ProtectedRoute';
 import AuthModal from './components/AuthModal';
 import CheckoutModal from './components/CheckoutModal';
 import DemoModal from './components/DemoModal';
@@ -67,16 +68,15 @@ export default function App() {
             {/* Header */}
             <Header />
 
-            {/* Main Content Viewports - Each page handles its own background & styling */}
+            {/* Main Content Viewports */}
             <main className="flex-grow w-full">
               <Routes>
+                {/* Public Landing Pages */}
                 <Route path="/" element={<HomePage />} />
                 <Route path="/solutions" element={<SolutionsPage />} />
                 <Route path="/platform" element={<PlatformPage />} />
-                <Route path="/telemetry" element={<TelemetryPage />} />
                 <Route path="/quiz" element={<QuizPage />} />
                 <Route path="/pricing" element={<PricingPage />} />
-                <Route path="/paid-services" element={<PaidServicesPage />} />
                 <Route path="/cases" element={<CasesPage />} />
                 <Route path="/news" element={<NewsPage />} />
                 <Route path="/contact" element={<ContactPage />} />
@@ -96,15 +96,11 @@ export default function App() {
                 <Route path="/resources/videos" element={<VideosPage />} />
                 <Route path="/resources/webinars" element={<WebinarsPage />} />
 
-                {/* Header Landing Routes */}
+                {/* Main Header Categories */}
                 <Route path="/products" element={<ProductsPage />} />
                 <Route path="/industries" element={<IndustriesPage />} />
                 <Route path="/resources" element={<ResourcesPage />} />
-
-                {/* Header Dropdown Subpages */}
-                <Route path="/products/defense" element={<DefensePage />} />
-                <Route path="/products/tires" element={<TiresPage />} />
-                <Route path="/products/custom-software" element={<CustomSoftwarePage />} />
+                <Route path="/features" element={<FeaturesPage />} />
 
                 <Route path="/industries/buses" element={<BusesPage />} />
                 <Route path="/industries/concrete" element={<ConcretePage />} />
@@ -113,14 +109,107 @@ export default function App() {
                 <Route path="/industries/medium-trucks" element={<MediumTrucksPage />} />
                 <Route path="/industries/mining" element={<MiningPage />} />
 
-                <Route path="/features" element={<FeaturesPage />} />
-                <Route path="/features/dashboards" element={<FleetDashboardsPage />} />
-                <Route path="/features/maintenance-optimization" element={<MaintenanceOptimizationPage />} />
-                <Route path="/features/data-hub" element={<DataHubPage />} />
-                <Route path="/features/remote-diagnostics" element={<RemoteDiagnosticsPage />} />
-                <Route path="/features/risk-explorer" element={<RiskExplorerPage />} />
-                <Route path="/features/sensor-insights" element={<SensorInsightsPage />} />
-                <Route path="/features/warranty" element={<WarrantyPage />} />
+                {/* 🔒 PROTECTED PREMIUM SUBSCRIBER ROUTES */}
+                <Route
+                  path="/telemetry"
+                  element={
+                    <ProtectedRoute>
+                      <TelemetryPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/paid-services"
+                  element={
+                    <ProtectedRoute>
+                      <PaidServicesPage />
+                    </ProtectedRoute>
+                  }
+                />
+
+                {/* Protected Product Modules */}
+                <Route
+                  path="/products/defense"
+                  element={
+                    <ProtectedRoute>
+                      <DefensePage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/products/tires"
+                  element={
+                    <ProtectedRoute>
+                      <TiresPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/products/custom-software"
+                  element={
+                    <ProtectedRoute>
+                      <CustomSoftwarePage />
+                    </ProtectedRoute>
+                  }
+                />
+
+                {/* Protected Feature Modules */}
+                <Route
+                  path="/features/dashboards"
+                  element={
+                    <ProtectedRoute>
+                      <FleetDashboardsPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/features/maintenance-optimization"
+                  element={
+                    <ProtectedRoute>
+                      <MaintenanceOptimizationPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/features/data-hub"
+                  element={
+                    <ProtectedRoute>
+                      <DataHubPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/features/remote-diagnostics"
+                  element={
+                    <ProtectedRoute>
+                      <RemoteDiagnosticsPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/features/risk-explorer"
+                  element={
+                    <ProtectedRoute>
+                      <RiskExplorerPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/features/sensor-insights"
+                  element={
+                    <ProtectedRoute>
+                      <SensorInsightsPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/features/warranty"
+                  element={
+                    <ProtectedRoute>
+                      <WarrantyPage />
+                    </ProtectedRoute>
+                  }
+                />
               </Routes>
             </main>
 
