@@ -63,12 +63,12 @@ export default function App() {
     <ToastProvider>
       <AuthProvider>
         <Router>
-          <div className="min-h-screen flex flex-col bg-[#07090E] text-slate-100 selection:bg-cyan-500 selection:text-slate-950 relative">
+          <div className="min-h-screen flex flex-col bg-white text-slate-900 selection:bg-blue-600 selection:text-white relative">
             {/* Header */}
             <Header />
 
-            {/* Main Content Viewports */}
-            <main className="flex-grow">
+            {/* Main Content Viewports - Each page handles its own background & styling */}
+            <main className="flex-grow w-full">
               <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/solutions" element={<SolutionsPage />} />
