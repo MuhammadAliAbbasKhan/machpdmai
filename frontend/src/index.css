@@ -13,15 +13,16 @@
   --rose-danger: #EF4444;
 }
 
-body {
+html, body {
   font-family: 'Inter', sans-serif;
-  background-color: #07090E;
-  color: #F1F5F9;
+  background-color: #ffffff;
+  color: #000000;
   overflow-x: hidden;
+  width: 100%;
 }
 
 h1, h2, h3, h4, h5, h6, .font-heading {
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Outfit', 'Inter', sans-serif;
 }
 
 /* Glassmorphism Card Style */
@@ -136,4 +137,71 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 }
 .animate-scanline {
   animation: scanline 8s linear infinite;
+}
+
+/* ===== MOBILE & TABLET RESPONSIVENESS (Android & iOS) ===== */
+@media (max-width: 991px) {
+  .wp-block-columns {
+    flex-direction: column !important;
+    flex-wrap: wrap !important;
+    gap: 1.5em !important;
+  }
+
+  .wp-block-column {
+    flex-basis: 100% !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .breakout-hero {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    height: auto !important;
+    min-height: 380px !important;
+    padding: 40px 16px !important;
+  }
+
+  .split-content {
+    flex-direction: column !important;
+  }
+
+  .uptake-image-and-text {
+    flex-direction: column !important;
+    gap: 20px !important;
+    padding: 10px !important;
+  }
+
+  .posts-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .bounded-modal-container {
+    width: 95vw !important;
+    padding: 20px !important;
+    max-height: 88vh !important;
+  }
+
+  img {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  .wpcp-carousel-wrapper {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .wpcp-carousel-wrapper {
+    grid-template-columns: 1fr !important;
+  }
+
+  h1 {
+    font-size: 28px !important;
+  }
+
+  h2 {
+    font-size: 22px !important;
+  }
 }
