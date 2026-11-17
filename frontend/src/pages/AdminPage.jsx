@@ -56,7 +56,7 @@ export default function AdminPage() {
                   required
                   value={passcode}
                   onChange={(e) => setPasscode(e.target.value)}
-                  placeholder="Enter Passcode (aliabbas1234578!)"
+                  placeholder="Enter Admin Passcode..."
                   className="w-full bg-[#151C2C] border border-slate-700 rounded-xl p-3 text-center text-sm font-mono text-white focus:outline-none focus:border-cyan-500"
                 />
               </div>

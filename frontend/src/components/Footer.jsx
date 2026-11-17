@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Twitter, Linkedin, Youtube, ArrowUp } from 'lucide-react';
+import { ArrowUp } from 'lucide-react';
 
 export default function Footer() {
   const navigate = useNavigate();
@@ -30,34 +30,18 @@ export default function Footer() {
 
             {/* Contact Details */}
             <div className="flex flex-col gap-3 text-sm text-slate-300 font-normal pt-2">
-              <p className="hover:text-white transition-colors cursor-pointer font-mono">
-                312.242.2200
+              <p className="hover:text-white transition-colors cursor-pointer ">
+                Phone coming soon
               </p>
               <p className="hover:text-white transition-colors cursor-pointer">
-                info@machpdmai.com
+                Email coming soon
               </p>
               <p className="text-slate-400 max-w-sm leading-relaxed">
-                2045 W. Grand Avenue, Ste B PMB 67705, Chicago, IL, 60612
+                Address coming soon
               </p>
             </div>
 
-            {/* Social Icons */}
-            <div className="flex items-center gap-5 pt-2">
-              <a href="https://x.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#165FFB] transition-colors" title="X (Twitter)">
-                {/* SVG X icon */}
-                <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                </svg>
-              </a>
-
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#165FFB] transition-colors" title="LinkedIn">
-                <Linkedin className="w-5 h-5" />
-              </a>
-
-              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#165FFB] transition-colors" title="YouTube">
-                <Youtube className="w-5 h-5" />
-              </a>
-            </div>
+            {/* TODO: add verified social links */}
           </div>
 
           {/* Right Columns: SOLUTIONS, RESOURCES, COMPANY (7 Cols) */}
@@ -123,7 +107,7 @@ export default function Footer() {
 
         {/* Footer Bottom copyright & back to top */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
-          <p>© {new Date().getFullYear()} MachPdMAI Inc. All rights reserved. Industrial Predictive Maintenance AI.</p>
+          <p>© {new Date().getFullYear()} MachPdMAI. All rights reserved. Industrial Predictive Maintenance AI.</p>
           <button
             onClick={scrollToTop}
             className="flex items-center gap-1 text-slate-400 hover:text-white font-semibold transition-colors"
